@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!-- Grayscale -->
+    <color name="gray_very_light">#EFEFEF</color>
+    <color name="gray_light">#DFDFDF</color>
+    <color name="gray_dark">#5F5F5F</color>
+
+    <!-- App wide usage colors -->
+    <color name="background_card">@color/colorAccent</color>
+
+</resources>
