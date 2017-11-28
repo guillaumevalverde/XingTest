@@ -7,4 +7,5 @@ package com.gve.testapplication.core.app;
 public class AppConstUtils {
 
     public static final String ITUNES_API_URL = "https://itunes.apple.com/";
+    public static final String GITHUB_API_URL = "https://api.github.com/";
 }

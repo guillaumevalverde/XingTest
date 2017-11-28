@@ -2,6 +2,7 @@ package com.gve.testapplication.core.app;
 
 import com.google.gson.Gson;
 import com.gve.testapplication.InstrumentationModule;
+import com.gve.testapplication.ListOfRepoFeature.data.GitHubApiService;
 import com.gve.testapplication.apium.albumlist.data.RetrofitItunesApiService;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -81,4 +82,9 @@ public final class NetworkModule {
         return retrofit.create(RetrofitItunesApiService.class);
     }
 
+    @Provides
+    @Singleton
+    static GitHubApiService provideGithubApiService(@Itunes Retrofit retrofit) {
+        return retrofit.create(GitHubApiService.class);
+    }
 }
