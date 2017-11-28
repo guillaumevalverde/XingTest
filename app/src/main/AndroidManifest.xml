@@ -15,27 +15,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.gve.testapplication.loginuser.presentation.LoginUserActivity"
-                  android:launchMode="singleTask"/>
-        <activity android:name="com.gve.testapplication.articlelist.presentation.ListArticleActivity" />
 
         <activity android:name=".apium.albumlist.presentation.ListAlbumActivity" >
 
+
+        </activity>
+        <activity android:name=".apium.albumdetail.presentation.ListSongActivity" />
+        <activity android:name=".ListOfRepoFeature.presentation.ListRepositoryActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.gve.testapplication.core.launch.LaunchActivity"
-            android:theme="@android:style/Theme.NoDisplay"
-            android:launchMode="singleTask"
-            android:windowSoftInputMode="stateHidden">
-
-        </activity>
-        <activity android:name="com.gve.testapplication.articledetail.presentation.DetailArticleActivity" />
-        <activity android:name=".apium.albumdetail.presentation.ListSongActivity" />
     </application>
 
 </manifest>

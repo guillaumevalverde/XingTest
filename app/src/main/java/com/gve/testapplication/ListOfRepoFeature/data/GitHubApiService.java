@@ -13,7 +13,7 @@ import retrofit2.http.Query;
 
 public interface GitHubApiService {
 
-    @GET("users/{user}/repo")
+    @GET("users/{user}/repos")
     Single<List<RepoRaw>> getRepo(@Path("user") String user,
                                   @Query("page") int page,
                                   @Query("per_page") int perPage);

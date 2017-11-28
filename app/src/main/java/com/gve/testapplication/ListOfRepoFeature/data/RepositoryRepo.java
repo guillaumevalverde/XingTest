@@ -22,7 +22,7 @@ public class RepositoryRepo {
         this.service = service;
     }
 
-    
+
     public Single<List<Repository>> fetch(int page) {
         return service.getRepo(REPO_XING, page, NUM_PER_PAGE)
                 .subscribeOn(Schedulers.io())

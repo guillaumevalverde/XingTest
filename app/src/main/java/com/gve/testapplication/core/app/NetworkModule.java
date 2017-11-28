@@ -25,6 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public final class NetworkModule {
 
     private static final String API_ITUNES_URL = "API_ITUNES_URL";
+    private static final String API_GITHUB_URL = "API_GITHUB_URL";
 
     @Qualifier
     @Retention(RetentionPolicy.RUNTIME)
@@ -38,12 +39,24 @@ public final class NetworkModule {
 
     @Qualifier
     @Retention(RetentionPolicy.RUNTIME)
-    public @interface FutureWorkshop {
+    public @interface Github {
     }
 
     @Qualifier
     @Retention(RetentionPolicy.RUNTIME)
     public @interface Itunes {
+    }
+
+    @Provides
+    @Singleton
+    @Github
+    static Retrofit provideGitHubApi(@Named(API_GITHUB_URL) String baseUrl, Gson gson,
+                                     OkHttpClient client) {
+        return new Retrofit.Builder().addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(client)
+                .baseUrl(baseUrl)
+                .build();
     }
 
     @Provides
@@ -62,6 +75,12 @@ public final class NetworkModule {
     @Named(API_ITUNES_URL)
     static String provideItunesUrl() {
         return AppConstUtils.ITUNES_API_URL;
+    }
+
+    @Provides
+    @Named(API_GITHUB_URL)
+    static String provideGitHubUrl() {
+        return AppConstUtils.GITHUB_API_URL;
     }
 
     @Provides
@@ -84,7 +103,7 @@ public final class NetworkModule {
 
     @Provides
     @Singleton
-    static GitHubApiService provideGithubApiService(@Itunes Retrofit retrofit) {
+    static GitHubApiService provideGithubApiService(@Github Retrofit retrofit) {
         return retrofit.create(GitHubApiService.class);
     }
 }

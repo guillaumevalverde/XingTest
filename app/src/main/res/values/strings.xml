@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Apium</string>
+    <string name="app_name">Xing</string>
 
     <!-- User Login related -->
     <string name="user_login_button">Log in</string>
@@ -27,4 +27,10 @@
     <!-- Song related -->
     <string name="song_detail_name">title: %1$s</string>
     <string name="song_detail_duration">duration: %1$s</string>
+
+    <!--Repository related -->
+    <string name="repo_name">Repository: %1$s</string>
+    <string name="repo_ddescritpion">description: %1$s</string>
+    <string name="repo_owner_login">Owner: %1$s</string>
+
 </resources>
