@@ -6,7 +6,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -62,13 +62,11 @@ ext {
             retrofit2RxJava2Adapter : '1.0.0',
             retrofit2GsonConverter  : '2.0.0',
             stetho                  : '1.5.0',
-            timber                  : '4.5.1',
             junit                   : '4.12',
             mockito                 : '2.8.9',
             assertJ                 : '3.8.0',
             gson                    : '2.8.1',
             leakCanary              : '1.5.1',
-            chuck                   : '1.1.0',
             autoValue               : '1.4.1',
             autoValueGson           : '0.5.0',
             rxbinding               : '2.0.0',
@@ -114,9 +112,6 @@ dependencies {
     implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$dependencyVersions.retrofit2RxJava2Adapter"
     implementation "com.squareup.retrofit2:converter-gson:$dependencyVersions.retrofit2"
 
-    // Timber
-    implementation "com.jakewharton.timber:timber:$dependencyVersions.timber"
-
     // Instrumentation
     implementation "com.facebook.stetho:stetho:$dependencyVersions.stetho"
     implementation "com.facebook.stetho:stetho-okhttp3:$dependencyVersions.stetho"
@@ -140,17 +135,11 @@ dependencies {
     // RxLint
     implementation "nl.littlerobots.rxlint:rxlint:1.6"
 
-    //chuck
-    debugImplementation "com.readystatesoftware.chuck:library:$dependencyVersions.chuck"
-    releaseImplementation "com.readystatesoftware.chuck:library-no-op:$dependencyVersions.chuck"
-
     //Autovalue
     compileOnly "com.google.auto.value:auto-value:$dependencyVersions.autoValue"
     annotationProcessor "com.google.auto.value:auto-value:$dependencyVersions.autoValue"
     compileOnly "com.ryanharter.auto.value:auto-value-gson:$dependencyVersions.autoValueGson"
     annotationProcessor "com.ryanharter.auto.value:auto-value-gson:$dependencyVersions.autoValueGson"
-
-    compile 'com.opencsv:opencsv:3.9'
 
     //Options
     implementation "com.github.tomaszpolanski:options:$dependencyVersions.option"
@@ -168,7 +157,6 @@ dependencies {
     // Testing support
     androidTestImplementation "android.arch.core:core-testing:1.0.0"
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-
 
 }
 repositories {

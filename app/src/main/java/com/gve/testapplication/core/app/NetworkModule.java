@@ -85,11 +85,9 @@ public final class NetworkModule {
 
     @Provides
     @Singleton
-    static OkHttpClient provideApiOkHttpClient(@AppInterceptor Set<Interceptor> appInterceptor,
-                                               @NetworkInterceptor Set<Interceptor>
+    static OkHttpClient provideApiOkHttpClient(@NetworkInterceptor Set<Interceptor>
                                                        networkInterceptor) {
         OkHttpClient.Builder okBuilder = new OkHttpClient.Builder();
-        okBuilder.interceptors().addAll(appInterceptor);
         okBuilder.networkInterceptors().addAll(networkInterceptor);
 
         return okBuilder.build();
