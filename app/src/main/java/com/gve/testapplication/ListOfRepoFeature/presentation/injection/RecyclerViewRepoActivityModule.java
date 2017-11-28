@@ -3,6 +3,7 @@ package com.gve.testapplication.ListOfRepoFeature.presentation.injection;
 import com.gve.testapplication.ListOfRepoFeature.presentation.RepositoryItemComparator;
 import com.gve.testapplication.ListOfRepoFeature.presentation.RepositoryViewHolder;
 import com.gve.testapplication.core.preconditions.AndroidPreconditions;
+import com.gve.testapplication.core.recyclerview.EmptyViewHolder;
 import com.gve.testapplication.core.recyclerview.ItemComparator;
 import com.gve.testapplication.core.recyclerview.RecyclerViewAdapter;
 import com.gve.testapplication.core.recyclerview.ViewHolderBinder;
@@ -16,6 +17,7 @@ import dagger.Provides;
 import dagger.multibindings.IntKey;
 import dagger.multibindings.IntoMap;
 
+import static com.gve.testapplication.core.recyclerview.RecyclerViewConstant.EMPTY_TYPE;
 import static com.gve.testapplication.core.recyclerview.RecyclerViewConstant.REPO_CARD_TYPE;
 
 /**
@@ -49,4 +51,15 @@ public abstract class RecyclerViewRepoActivityModule {
     @IntKey(REPO_CARD_TYPE)
     abstract ViewHolderBinder
         provideSongCardHolderBinder(RepositoryViewHolder.RepoCardHolderBinder binder);
+
+    @Binds
+    @IntoMap
+    @IntKey(EMPTY_TYPE)
+    abstract ViewHolderFactory provideEmptyCardHolderFactory(EmptyViewHolder.EmptyCardHolderFactory factory);
+
+    @Binds
+    @IntoMap
+    @IntKey(EMPTY_TYPE)
+    abstract ViewHolderBinder
+    provideEmptyCardHolderBinder(EmptyViewHolder.EmptyCardHolderBinder binder);
 }

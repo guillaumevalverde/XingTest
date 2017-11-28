@@ -11,11 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.gve.testapplication.ListOfRepoFeature.domain.ListRepoViewModel;
 import com.gve.testapplication.ListOfRepoFeature.presentation.injection.ListRepoActivityComponent;
 import com.gve.testapplication.ListOfRepoFeature.presentation.injection.ListRepoActivityModule;
 import com.gve.testapplication.R;
-import com.gve.testapplication.apium.albumlist.data.Album;
 import com.gve.testapplication.core.app.BootCampApp;
 import com.gve.testapplication.core.injection.qualifiers.ForActivity;
 import com.gve.testapplication.core.recyclerview.RecyclerViewAdapter;
@@ -48,7 +46,6 @@ public class ListRepositoryActivity extends AppCompatActivity {
     Picasso picasso;
 
     private CompositeDisposable disposable = new CompositeDisposable();
-    private Album album;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,35 +59,38 @@ public class ListRepositoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.repository_list);
 
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         TextView titleToolBar = toolbar.findViewById(R.id.toolbar_title);
-        titleToolBar.setText("ALBUM");
+        titleToolBar.setText(context.getResources().getString(R.string.app_name));
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
+        EndlessScrollListenerDelegate listener =
+                new EndlessScrollListenerDelegate(listViewModel.callableFetch());
+
+        recyclerView.addOnScrollListener(listener);
         RecyclerView.LayoutManager mLayoutManager
                 = new LinearLayoutManager(getApplicationContext());
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-                DividerItemDecoration.VERTICAL);
+        DividerItemDecoration dividerItemDecoration =
+                new DividerItemDecoration(recyclerView.getContext(),
+                        DividerItemDecoration.VERTICAL);
 
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
         disposable.add(
-                listViewModel.getDisplayableList(1)
+                listViewModel.getDisplayableList()
                         .subscribeOn(Schedulers.computation())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(users -> {
                             Log.v(TAG, "update adapter");
                             adapter.update(users);
                         }, e -> Log.e(TAG, e.getMessage())));
-
     }
 
     @Override

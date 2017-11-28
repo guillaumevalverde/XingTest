@@ -22,7 +22,7 @@ import static com.gve.testapplication.core.recyclerview.DisplayableItem.toDispla
 public class RepoDisplayableMapper implements Function<List<Repository>, List<DisplayableItem>> {
 
     @Inject
-    RepoDisplayableMapper() { }
+    public RepoDisplayableMapper() { }
 
     @Override
     public List<DisplayableItem> apply(@NonNull final List<Repository> repositories) throws Exception {

@@ -10,7 +10,7 @@ import io.reactivex.functions.Function
 
 object MapperRepoRawToRepo {
 
-    val mapperRepoRawToRepo: io.reactivex.functions.Function<RepoRaw, Repository> =
+    private val mapperRepoRawToRepo: io.reactivex.functions.Function<RepoRaw, Repository> =
             Function { repoRaw -> Repository(repoRaw.id,
                     repoRaw.name ?: "",
                     repoRaw.description?: "",

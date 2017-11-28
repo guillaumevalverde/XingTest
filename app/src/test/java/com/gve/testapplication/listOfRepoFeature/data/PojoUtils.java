@@ -1,5 +1,17 @@
 package com.gve.testapplication.listOfRepoFeature.data;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.gve.testapplication.ListOfRepoFeature.data.MapperRepoRawToRepo;
+import com.gve.testapplication.ListOfRepoFeature.data.RepoRaw;
+import com.gve.testapplication.ListOfRepoFeature.data.Repository;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Single;
+
 /**
  * Created by gve on 28/11/2017.
  */
@@ -211,4 +223,11 @@ public class PojoUtils {
             "    \"default_branch\": \"master\"\n" +
             "  }\n" +
             "]";
+
+    public static Single<List<Repository>> getList(Gson gson) {
+        Type listType = new TypeToken<ArrayList<RepoRaw>>(){}.getType();
+        List<RepoRaw> listRepoRaw = gson.fromJson(PojoUtils.LIST_2_REPO_RAW, listType);
+        return Single.just(listRepoRaw)
+                .flatMap(MapperRepoRawToRepo.INSTANCE.getMapperListRepoRawToRepo());
+    }
 }
