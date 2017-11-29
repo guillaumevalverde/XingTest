@@ -1,5 +1,8 @@
 package com.gve.testapplication.ListOfRepoFeature.presentation;
 
+import android.arch.lifecycle.LifecycleActivity;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,10 +35,10 @@ public class ListRepositoryActivity extends AppCompatActivity {
     public static final String TAG = ListRepositoryActivity.class.getSimpleName();
 
     @Inject
-    ListRepoViewModel listViewModel;
+    RecyclerViewAdapter adapter;
 
     @Inject
-    RecyclerViewAdapter adapter;
+    ViewModelProvider.Factory viewModelFactory;
 
     @Inject
     @ForActivity
@@ -53,6 +56,9 @@ public class ListRepositoryActivity extends AppCompatActivity {
         builder.activityModule(new ListRepoActivityModule(this)).build().inject(this);
 
         super.onCreate(savedInstanceState);
+
+        final LifeCycleViewModel viewModel = ViewModelProviders.of(this, viewModelFactory).get(LifeCycleViewModel.class);
+
         setContentView(R.layout.repository_list);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -65,7 +71,7 @@ public class ListRepositoryActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
         EndlessScrollListenerDelegate listener =
-                new EndlessScrollListenerDelegate(listViewModel.callableFetch());
+                new EndlessScrollListenerDelegate(viewModel.callableFetch());
 
         recyclerView.addOnScrollListener(listener);
         RecyclerView.LayoutManager mLayoutManager
@@ -79,14 +85,9 @@ public class ListRepositoryActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
-        disposable.add(
-                listViewModel.getDisplayableList()
-                        .subscribeOn(Schedulers.computation())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(users -> {
-                            Log.v(TAG, "update adapter");
-                            adapter.update(users);
-                        }, e -> Log.e(TAG, e.getMessage())));
+
+
+        viewModel.getRepositoryListLiveData().observe(this, adapter::update);
     }
 
     @Override

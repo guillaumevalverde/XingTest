@@ -16,7 +16,7 @@ import dagger.Component;
 
 @Singleton
 @Component(modules = {BootCampModule.class, NetworkModule.class,
-        ActivityBindingModule.class, DataModule.class})
+        ActivityBindingModule.class, DataModule.class, ViewModelModule.class})
 public interface BootCampComponent {
 
     @Component.Builder

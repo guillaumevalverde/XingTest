@@ -1,7 +1,6 @@
 package com.gve.testapplication.ListOfRepoFeature.presentation;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.gve.testapplication.ListOfRepoFeature.data.ListRepositoryRepo;
 import com.gve.testapplication.core.recyclerview.DisplayableItem;
