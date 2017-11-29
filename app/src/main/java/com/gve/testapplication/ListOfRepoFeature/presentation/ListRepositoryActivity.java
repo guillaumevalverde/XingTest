@@ -17,7 +17,6 @@ import com.gve.testapplication.R;
 import com.gve.testapplication.core.app.BootCampApp;
 import com.gve.testapplication.core.injection.qualifiers.ForActivity;
 import com.gve.testapplication.core.recyclerview.RecyclerViewAdapter;
-import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
@@ -41,9 +40,6 @@ public class ListRepositoryActivity extends AppCompatActivity {
     @Inject
     @ForActivity
     Context context;
-
-    @Inject
-    Picasso picasso;
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
