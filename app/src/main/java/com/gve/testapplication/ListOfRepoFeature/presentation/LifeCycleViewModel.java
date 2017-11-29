@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.gve.testapplication.ListOfRepoFeature.domain.EndlessListRepoLogic;
 import com.gve.testapplication.core.recyclerview.DisplayableItem;
 
 import java.util.List;
@@ -30,10 +31,10 @@ public class LifeCycleViewModel extends ViewModel {
 
     private final MutableLiveData<List<DisplayableItem>> repositoryListLiveData = new MutableLiveData<>();
 
-    private ListRepoViewModel viewModel;
+    private EndlessListRepoLogic viewModel;
 
     @Inject
-    LifeCycleViewModel(@NonNull final ListRepoViewModel viewModel) {
+    LifeCycleViewModel(@NonNull final EndlessListRepoLogic viewModel) {
         // Bind view model
         this.viewModel = viewModel;
         compositeDisposable.add(bindToListRepos());

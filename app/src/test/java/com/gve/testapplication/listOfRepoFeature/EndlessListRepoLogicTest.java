@@ -4,7 +4,7 @@ package com.gve.testapplication.listOfRepoFeature;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.gve.testapplication.ListOfRepoFeature.data.ListRepositoryRepo;
-import com.gve.testapplication.ListOfRepoFeature.presentation.ListRepoViewModel;
+import com.gve.testapplication.ListOfRepoFeature.domain.EndlessListRepoLogic;
 import com.gve.testapplication.ListOfRepoFeature.presentation.RepoDisplayableMapper;
 import com.gve.testapplication.core.recyclerview.DisplayableItem;
 import com.gve.testapplication.listOfRepoFeature.data.PojoUtils;
@@ -28,7 +28,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
  * Created by gve on 29/11/2017.
  */
 
-public class ListRepoViewModelTest extends BaseTest {
+public class EndlessListRepoLogicTest extends BaseTest {
 
     @Mock
     private ListRepositoryRepo repo;
@@ -43,9 +43,9 @@ public class ListRepoViewModelTest extends BaseTest {
 
 
     @Test
-    public void listRepoViewModelWithoutAnyScrollTest() {
+    public void logicWithNoScrollTriggeringFetchTest() {
         Mockito.when(repo.get(anyLong())).thenReturn(PojoUtils.getList(gson));
-        ListRepoViewModel viewModel = new ListRepoViewModel(new RepoDisplayableMapper(), repo);
+        EndlessListRepoLogic viewModel = new EndlessListRepoLogic(new RepoDisplayableMapper(), repo);
 
         TestSubscriber<List<DisplayableItem>> testSubscriber = viewModel.getDisplayableList().test();
 
@@ -55,10 +55,15 @@ public class ListRepoViewModelTest extends BaseTest {
         testSubscriber.assertNotComplete();
     }
 
+    /**
+     * scrolling behavior trigger the call of viewModel.callableFetch().call()
+     * @throws Exception
+     */
     @Test
-    public void listRepoViewModelWithScrollTest() throws Exception {
+    public void logicWithOneScrollTriggeringFetchTest() throws Exception {
         Mockito.when(repo.get(anyLong())).thenReturn(PojoUtils.getList(gson));
-        ListRepoViewModel viewModel = new ListRepoViewModel(new RepoDisplayableMapper(), repo);
+        EndlessListRepoLogic viewModel = new EndlessListRepoLogic(new RepoDisplayableMapper(), repo);
+
         List<List<DisplayableItem>> listResult = new ArrayList<>();
         TestSubscriber<List<DisplayableItem>> testSubscriber = new TestSubscriber<>();
 
@@ -68,6 +73,7 @@ public class ListRepoViewModelTest extends BaseTest {
                     listResult.add(list);
                 })
                 .subscribe(testSubscriber);
+
         viewModel.callableFetch().call();
 
 
@@ -76,7 +82,7 @@ public class ListRepoViewModelTest extends BaseTest {
         assertEquals(3, testSubscriber.values().size());
         assertEquals(3, listResult.size());
 
-        // first load of 2 items
+        // first load of a list of 2 items
         assertEquals(2, listResult.get(0).size());
 
         // enable fetch, add progress bar to the current list
@@ -87,11 +93,11 @@ public class ListRepoViewModelTest extends BaseTest {
     }
 
     @Test
-    public void repositoryRepoEmptyStoreAndErrorNetworkTest() throws Exception {
+    public void withEmptyStoreAndErrorNetworkTest() throws Exception {
         Mockito.when(repo.get(anyLong())).thenReturn(PojoUtils.getList(gson),
                 Single.error(new Exception()));
 
-        ListRepoViewModel viewModel = new ListRepoViewModel(new RepoDisplayableMapper(), repo);
+        EndlessListRepoLogic viewModel = new EndlessListRepoLogic(new RepoDisplayableMapper(), repo);
         List<List<DisplayableItem>> listResult = new ArrayList<>();
 
         TestSubscriber<List<DisplayableItem>> testSubscriber = new TestSubscriber<>();

@@ -56,7 +56,7 @@ public class ListRepositoryRepoTest extends BaseTest {
 
 
     @Test
-    public void repositoryRepoTest() {
+    public void WithEmptyStoreFetchTest() {
         ListRepositoryRepo listRepositoryRepo = new ListRepositoryRepo(gitHubApiService, store);
         when(gitHubApiService.getRepo(Mockito.anyString(), Mockito.anyInt(),Mockito.anyInt()))
                 .thenReturn(PojoUtils.getListRaw(gson));
@@ -71,7 +71,7 @@ public class ListRepositoryRepoTest extends BaseTest {
     }
 
     @Test
-    public void repositoryRepoStoreNonEmptyTest() {
+    public void withStoreNonEmptyNoFetchTest() {
         ListRepositoryRepo listRepositoryRepo = new ListRepositoryRepo(gitHubApiService, store);
         when(gitHubApiService.getRepo(Mockito.anyString(), Mockito.anyInt(),Mockito.anyInt()))
                 .thenReturn(Single.just(new ArrayList<>()));

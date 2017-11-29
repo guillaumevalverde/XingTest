@@ -1,8 +1,9 @@
-package com.gve.testapplication.ListOfRepoFeature.presentation;
+package com.gve.testapplication.ListOfRepoFeature.domain;
 
 import android.support.annotation.NonNull;
 
 import com.gve.testapplication.ListOfRepoFeature.data.ListRepositoryRepo;
+import com.gve.testapplication.ListOfRepoFeature.presentation.RepoDisplayableMapper;
 import com.gve.testapplication.core.recyclerview.DisplayableItem;
 import com.gve.testapplication.core.recyclerview.RecyclerViewConstant;
 
@@ -24,7 +25,7 @@ import static com.gve.testapplication.core.recyclerview.DisplayableItem.toDispla
  * Created by gve on 28/11/2017.
  */
 
-public class ListRepoViewModel {
+public class EndlessListRepoLogic {
     private CompositeDisposable disposable = new CompositeDisposable();
     private RepoDisplayableMapper mapper;
     private ListRepositoryRepo repo;
@@ -34,8 +35,8 @@ public class ListRepoViewModel {
     private int numPage = 1;
 
     @Inject
-    public ListRepoViewModel(@NonNull RepoDisplayableMapper mapper,
-                             @NonNull ListRepositoryRepo repo) {
+    public EndlessListRepoLogic(@NonNull RepoDisplayableMapper mapper,
+                                @NonNull ListRepositoryRepo repo) {
 
         this.mapper = mapper;
         this.repo = repo;
