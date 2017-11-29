@@ -18,6 +18,7 @@ import org.mockito.Mockito;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Single;
 import io.reactivex.subscribers.TestSubscriber;
 
 import static junit.framework.Assert.assertEquals;
@@ -83,5 +84,39 @@ public class ListRepoViewModelTest extends BaseTest {
 
         // new list fetched and added to current list removing the progress bar item
         assertEquals(4, listResult.get(2).size());
+    }
+
+    @Test
+    public void repositoryRepoEmptyStoreAndErrorNetworkTest() throws Exception {
+        Mockito.when(repo.get(anyLong())).thenReturn(PojoUtils.getList(gson),
+                Single.error(new Exception()));
+
+        ListRepoViewModel viewModel = new ListRepoViewModel(new RepoDisplayableMapper(), repo);
+        List<List<DisplayableItem>> listResult = new ArrayList<>();
+
+        TestSubscriber<List<DisplayableItem>> testSubscriber = new TestSubscriber<>();
+        viewModel.getDisplayableList()
+                .doOnNext(list -> {
+                    System.out.println("list size on next: " + list.size());
+                    listResult.add(list);
+                })
+                .subscribe(testSubscriber);
+
+        viewModel.callableFetch().call();
+
+
+        testSubscriber.assertNoErrors();
+        testSubscriber.assertNotComplete();
+        assertEquals(3, testSubscriber.values().size());
+        assertEquals(3, listResult.size());
+
+        // first load of 2 items
+        assertEquals(2, listResult.get(0).size());
+
+        // enable fetch, add progress bar to the current list
+        assertEquals(3, listResult.get(1).size());
+
+        // error, we remove progress item, back to size of 2
+        assertEquals(2, listResult.get(2).size());
     }
 }

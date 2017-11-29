@@ -14,6 +14,7 @@ import javax.inject.Inject;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.subjects.BehaviorSubject;
 
@@ -53,11 +54,11 @@ public class ListRepoViewModel {
                     current.addAll(list);
                     return current;
                 })
-                    .subscribe(list -> {
-                        listBehaviorSubject.onNext(list);
-                        numPage++;
+                .subscribe(list -> {
+                    listBehaviorSubject.onNext(list);
+                    numPage++;
                     }, error -> listBehaviorSubject.onNext(
-                                removeLastItemIfEmptyType(listBehaviorSubject.getValue()))));
+                        removeLastItemIfEmptyType(listBehaviorSubject.getValue()))));
     }
 
     public Callable callableFetch() {
