@@ -1,9 +1,9 @@
 package com.gve.testapplication.ListOfRepoFeature.presentation;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
-import com.gve.testapplication.ListOfRepoFeature.data.RepositoryRepo;
-import com.gve.testapplication.ListOfRepoFeature.presentation.RepoDisplayableMapper;
+import com.gve.testapplication.ListOfRepoFeature.data.ListRepositoryRepo;
 import com.gve.testapplication.core.recyclerview.DisplayableItem;
 import com.gve.testapplication.core.recyclerview.RecyclerViewConstant;
 
@@ -27,7 +27,7 @@ import static com.gve.testapplication.core.recyclerview.DisplayableItem.toDispla
 public class ListRepoViewModel {
     private CompositeDisposable disposable = new CompositeDisposable();
     private RepoDisplayableMapper mapper;
-    private RepositoryRepo repo;
+    private ListRepositoryRepo repo;
     private BehaviorSubject<List<DisplayableItem>> listBehaviorSubject =
             BehaviorSubject.createDefault(new ArrayList<DisplayableItem>());
 
@@ -35,7 +35,7 @@ public class ListRepoViewModel {
 
     @Inject
     public ListRepoViewModel(@NonNull RepoDisplayableMapper mapper,
-                             @NonNull RepositoryRepo repo) {
+                             @NonNull ListRepositoryRepo repo) {
 
         this.mapper = mapper;
         this.repo = repo;
@@ -46,7 +46,7 @@ public class ListRepoViewModel {
         if (listBehaviorSubject.getValue().size() > 0) {
             listBehaviorSubject.onNext(addProgressEmptyRow(listBehaviorSubject.getValue()));
         }
-        disposable.add(repo.fetch(numPage)
+        disposable.add(repo.get(numPage)
                 .map(mapper)
                 .map(list -> {
                     List<DisplayableItem> current =

@@ -5,6 +5,8 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.gve.testapplication.BuildConfig;
+import com.gve.testapplication.ListOfRepoFeature.data.ListRepositoryRepo;
+import com.gve.testapplication.ListOfRepoFeature.data.Repository;
 import com.gve.testapplication.apium.albumdetail.data.Song;
 import com.gve.testapplication.apium.albumdetail.data.SongRepo;
 import com.gve.testapplication.apium.albumlist.data.Album;
@@ -12,7 +14,6 @@ import com.gve.testapplication.apium.albumlist.data.AlbumRepo;
 import com.gve.testapplication.core.data.ReactiveStoreSingular;
 import com.gve.testapplication.core.data.roomjsonstore.RoomJsonStore;
 import com.gve.testapplication.core.data.AppDataBase;
-import com.gve.testapplication.core.data.ReactiveStore;
 import com.gve.testapplication.core.injection.qualifiers.ForApplication;
 import com.squareup.picasso.Picasso;
 
@@ -63,6 +64,18 @@ final class DataModule {
                 AppDataBase.getDatabase(context),
                 SongRepo.getKeyFunction(),
                 json -> gson.fromJson(json, new TypeToken<List<Song>>(){ }.getType()),
+                gson::toJson,
+                () -> "[]");
+    }
+
+    @Provides
+    @Singleton
+    ReactiveStoreSingular<List<Repository>> provideRoomListRepoStore(@ForApplication Context context,
+                                                           Gson gson) {
+        return new RoomJsonStore<List<Repository>>(
+                AppDataBase.getDatabase(context),
+                ListRepositoryRepo.getKeyFunction(),
+                json -> gson.fromJson(json, new TypeToken<List<Repository>>(){ }.getType()),
                 gson::toJson,
                 () -> "[]");
     }

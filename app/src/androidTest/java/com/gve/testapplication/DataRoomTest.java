@@ -73,7 +73,7 @@ public class DataRoomTest {
                 gson::toJson,
                 () -> "[]");
 
-        TestSubscriber<Pair<Long, List<Album>>> testSubscriber = store.getSingular("key").test();
+        TestSubscriber<Pair<Long, List<Album>>> testSubscriber = store.getSingularStream("key").test();
 
         testSubscriber.assertNoErrors();
         testSubscriber.assertValueAt(0, new Predicate<Pair<Long, List<Album>>>() {

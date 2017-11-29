@@ -230,4 +230,10 @@ public class PojoUtils {
         return Single.just(listRepoRaw)
                 .flatMap(MapperRepoRawToRepo.INSTANCE.getMapperListRepoRawToRepo());
     }
+
+    public static Single<List<RepoRaw>> getListRaw(Gson gson) {
+        Type listType = new TypeToken<ArrayList<RepoRaw>>(){}.getType();
+        List<RepoRaw> listRepoRaw = gson.fromJson(PojoUtils.LIST_2_REPO_RAW, listType);
+        return Single.just(listRepoRaw);
+    }
 }

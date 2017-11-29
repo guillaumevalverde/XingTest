@@ -87,7 +87,7 @@ public class SongRepoTest extends BaseTest {
         Mockito.when(service.fetchSongRawListData(SongDataTestUtils.getAlbumId())).thenReturn(fetchDataRaw);
 
 
-        Mockito.when(reactiveStore.getSingular(key))
+        Mockito.when(reactiveStore.getSingularStream(key))
                 .thenReturn(storeMockbehaviorSubject.toFlowable(BackpressureStrategy.LATEST));
 
         TestSubscriber testSubscriber = repo.getStream(SongDataTestUtils.getAlbumId()).test();
@@ -113,7 +113,7 @@ public class SongRepoTest extends BaseTest {
 
         String key = SongRepo.getKeyFromAlbum(SongDataTestUtils.getAlbumId());
 
-        Mockito.when(reactiveStore.getSingular(key))
+        Mockito.when(reactiveStore.getSingularStream(key))
                 .thenReturn(storeMockbehaviorSubject.toFlowable(BackpressureStrategy.LATEST));
 
         TestSubscriber<List<Song>> testSubscriber = repo.getStream(SongDataTestUtils.getAlbumId()).test();

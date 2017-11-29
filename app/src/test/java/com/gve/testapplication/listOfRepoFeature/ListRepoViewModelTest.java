@@ -3,7 +3,7 @@ package com.gve.testapplication.listOfRepoFeature;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.gve.testapplication.ListOfRepoFeature.data.RepositoryRepo;
+import com.gve.testapplication.ListOfRepoFeature.data.ListRepositoryRepo;
 import com.gve.testapplication.ListOfRepoFeature.presentation.ListRepoViewModel;
 import com.gve.testapplication.ListOfRepoFeature.presentation.RepoDisplayableMapper;
 import com.gve.testapplication.core.recyclerview.DisplayableItem;
@@ -21,7 +21,7 @@ import java.util.List;
 import io.reactivex.subscribers.TestSubscriber;
 
 import static junit.framework.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
 
 /**
  * Created by gve on 29/11/2017.
@@ -30,7 +30,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 public class ListRepoViewModelTest extends BaseTest {
 
     @Mock
-    private RepositoryRepo repositoryRepo;
+    private ListRepositoryRepo repo;
 
     private Gson gson;
 
@@ -40,10 +40,11 @@ public class ListRepoViewModelTest extends BaseTest {
         gson = builder.create();
     }
 
+
     @Test
     public void listRepoViewModelWithoutAnyScrollTest() {
-        Mockito.when(repositoryRepo.fetch(anyInt())).thenReturn(PojoUtils.getList(gson));
-        ListRepoViewModel viewModel = new ListRepoViewModel(new RepoDisplayableMapper(), repositoryRepo);
+        Mockito.when(repo.get(anyLong())).thenReturn(PojoUtils.getList(gson));
+        ListRepoViewModel viewModel = new ListRepoViewModel(new RepoDisplayableMapper(), repo);
 
         TestSubscriber<List<DisplayableItem>> testSubscriber = viewModel.getDisplayableList().test();
 
@@ -55,14 +56,14 @@ public class ListRepoViewModelTest extends BaseTest {
 
     @Test
     public void listRepoViewModelWithScrollTest() throws Exception {
-        Mockito.when(repositoryRepo.fetch(anyInt())).thenReturn(PojoUtils.getList(gson));
-        ListRepoViewModel viewModel = new ListRepoViewModel(new RepoDisplayableMapper(), repositoryRepo);
+        Mockito.when(repo.get(anyLong())).thenReturn(PojoUtils.getList(gson));
+        ListRepoViewModel viewModel = new ListRepoViewModel(new RepoDisplayableMapper(), repo);
         List<List<DisplayableItem>> listResult = new ArrayList<>();
         TestSubscriber<List<DisplayableItem>> testSubscriber = new TestSubscriber<>();
 
         viewModel.getDisplayableList()
                 .doOnNext(list -> {
-                    System.out.println("flowable 2 on next " + list.size());
+                    System.out.println("list size on next: " + list.size());
                     listResult.add(list);
                 })
                 .subscribe(testSubscriber);
