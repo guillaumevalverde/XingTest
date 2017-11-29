@@ -13,9 +13,9 @@ object MapperRepoRawToRepo {
     private val mapperRepoRawToRepo: io.reactivex.functions.Function<RepoRaw, Repository> =
             Function { repoRaw -> Repository(repoRaw.id,
                     repoRaw.name ?: "",
-                    repoRaw.description?: "",
+                    repoRaw.description?: "no description",
                     repoRaw.owner.login,
-                    repoRaw.url,
+                    repoRaw.html_url,
                     repoRaw.owner.html_url,
                     repoRaw.fork) }
 
