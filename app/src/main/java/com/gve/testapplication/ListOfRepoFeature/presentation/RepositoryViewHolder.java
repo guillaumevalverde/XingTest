@@ -2,6 +2,7 @@ package com.gve.testapplication.ListOfRepoFeature.presentation;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,9 @@ public class RepositoryViewHolder extends RecyclerView.ViewHolder {
                 .getString(R.string.repo_ddescritpion, repository.getDescription()));
         repoOwnerLoginTv.setText(repoOwnerLoginTv.getResources()
                 .getString(R.string.repo_owner_login, repository.getLoginOwner()));
+        itemView.setBackgroundColor(repository.getFork()
+                ? itemView.getContext().getResources().getColor(R.color.background_card_fork_true)
+                : itemView.getContext().getResources().getColor(R.color.background_card_fork_false));
 
     }
 
